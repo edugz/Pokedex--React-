@@ -1,7 +1,14 @@
 import React from "react";
+import "./App.css";
+
+import AppTitle from "../Header/AppTitle/AppTitle";
 
 function App() {
-  return <div>App</div>;
+  return (
+    <>
+      <AppTitle />
+    </>
+  );
 }
 
 export default App;
