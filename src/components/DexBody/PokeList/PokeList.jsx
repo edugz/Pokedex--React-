@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./PokeList.css";
+import ErrorScreen from "../../Common/ErrorScreen/ErrorScreen";
+import LoadingScreen from "../../Common/LoadingScreen/LoadingScreen";
 import PokeItem from "./PokeItem/PokeItem";
 
 function PokeList() {
@@ -10,23 +12,21 @@ function PokeList() {
   useEffect(() => {
     const fetchPokemon = async () => {
       try {
-        const response = await fetch(
+        // Error Simulation for Error display optimization
+        throw new Error("Simulated error for testing");
+
+        /*         const response = await fetch(
           "https://pokeapi.co/api/v2/pokemon?limit=151"
         );
         if (!response.ok) {
           throw new Error("Failed to fetch Pokemon Data");
         }
         const data = await response.json();
-        setTimeout(() => {
-          setPokemonList(data.results);
-          setLoading(false);
-        }, 3000); // 3-second delay for testing purposes: loading screen
+        setPokemonList(data.results); */
       } catch (err) {
         setError(err.message);
       } finally {
-        setTimeout(() => {
-          setLoading(false);
-        }, 3000); // 3-second delay for testing purposes: loading screen
+        setLoading(false);
       }
     };
 
@@ -34,20 +34,11 @@ function PokeList() {
   }, []);
 
   if (loading) {
-    return (
-      <div className="loading-container">
-        <div className="loading-dots">
-          <span>.</span>
-          <span>.</span>
-          <span>.</span>
-        </div>
-        <p>Loading Pokémon...</p>
-      </div>
-    );
+    return <LoadingScreen />;
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <ErrorScreen message={error} />;
   }
 
   console.log(pokemonList);
