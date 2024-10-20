@@ -41,9 +41,25 @@
   gap: 10px;
 }
 
-/* Type Image Styling */
-.type-img {
-  width: 40px;
-  height: 40px;
-  object-fit: contain;
+/* Type Box Styling */
+.type-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin: 5px;
+  color: white;
+  font-weight: bold;
+  padding: 2px;
+}
+
+.grass {
+  background-color: rgb(49, 180, 49);
+}
+
+.poison {
+  background-color: purple;
 }

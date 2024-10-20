@@ -28,6 +28,8 @@ function PokeList() {
               name: detailedData.name,
               id: detailedData.id,
               types: detailedData.types.map((type) => type.type.name),
+              sprite: detailedData.sprites.front_default,
+              shinySprite: detailedData.sprites.front_shiny,
             };
           })
         );
@@ -55,13 +57,16 @@ function PokeList() {
 
   return (
     <div className="list-main-container">
-      {pokemonList.map((pokemon) => (
-        <PokeItem
-          key={pokemon.name}
-          name={pokemon.name}
-          types={pokemon.types}
-        />
-      ))}
+      {pokemonList.map((pokemon) => {
+        const pokemonProps = {
+          name: pokemon.name,
+          id: pokemon.id,
+          types: pokemon.types,
+          sprite: pokemon.sprite,
+          shinySprite: pokemon.shinySprite,
+        };
+        return <PokeItem {...pokemonProps} key={pokemon.name} />;
+      })}
     </div>
   );
 }
