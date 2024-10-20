@@ -12,17 +12,27 @@ function PokeList() {
   useEffect(() => {
     const fetchPokemon = async () => {
       try {
-        // Error Simulation for Error display optimization
-        throw new Error("Simulated error for testing");
-
-        /*         const response = await fetch(
+        const response = await fetch(
           "https://pokeapi.co/api/v2/pokemon?limit=151"
         );
         if (!response.ok) {
           throw new Error("Failed to fetch Pokemon Data");
         }
         const data = await response.json();
-        setPokemonList(data.results); */
+
+        const detailedPokemonList = await Promise.all(
+          data.results.map(async (pokemon) => {
+            const detailedResponse = await fetch(pokemon.url);
+            const detailedData = await detailedResponse.json();
+            return {
+              name: detailedData.name,
+              id: detailedData.id,
+              types: detailedData.types.map((type) => type.type.name),
+            };
+          })
+        );
+
+        setPokemonList(detailedPokemonList);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -46,7 +56,11 @@ function PokeList() {
   return (
     <div className="list-main-container">
       {pokemonList.map((pokemon) => (
-        <PokeItem key={pokemon.name} name={pokemon.name} number={pokemon.id} />
+        <PokeItem
+          key={pokemon.name}
+          name={pokemon.name}
+          types={pokemon.types}
+        />
       ))}
     </div>
   );
