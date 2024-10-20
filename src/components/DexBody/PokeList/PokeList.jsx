@@ -8,12 +8,13 @@ function PokeList() {
   const [pokemonList, setPokemonList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [visibleCount, setVisibleCount] = useState(16);
 
   useEffect(() => {
     const fetchPokemon = async () => {
       try {
         const response = await fetch(
-          "https://pokeapi.co/api/v2/pokemon?limit=151"
+          "https://pokeapi.co/api/v2/pokemon?limit=493"
         );
         if (!response.ok) {
           throw new Error("Failed to fetch Pokemon Data");
@@ -45,6 +46,10 @@ function PokeList() {
     fetchPokemon();
   }, []);
 
+  const handleLoadMore = () => {
+    setVisibleCount((prevCount) => prevCount + 16);
+  };
+
   if (loading) {
     return <LoadingScreen />;
   }
@@ -57,7 +62,7 @@ function PokeList() {
 
   return (
     <div className="list-main-container">
-      {pokemonList.map((pokemon) => {
+      {pokemonList.slice(0, visibleCount).map((pokemon) => {
         const pokemonProps = {
           name: pokemon.name,
           id: pokemon.id,
@@ -67,6 +72,13 @@ function PokeList() {
         };
         return <PokeItem {...pokemonProps} key={pokemon.name} />;
       })}
+      {visibleCount < pokemonList.length && (
+        <div className="load-more-container">
+          <button className="load-more-button" onClick={handleLoadMore}>
+            Load More
+          </button>
+        </div>
+      )}
     </div>
   );
 }

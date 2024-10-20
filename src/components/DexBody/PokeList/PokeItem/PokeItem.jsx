@@ -18,9 +18,9 @@ function PokeItem({ name, id, sprite, shinySprite, types }) {
       <p className="pokemon-number">{formattedId}</p>
       <h2 className="pokemon-name">{capitalizedName}</h2>
       <div className="pokemon-types">
-        <span className={`type-box ${types[0]}`}> {formattedType01} </span>
+        <span className={`type-box type-${types[0]}`}>{formattedType01}</span>
         {types[1] && (
-          <span className={`type-box ${types[1]}`}> {formattedType02} </span>
+          <span className={`type-box type-${types[1]}`}>{formattedType02}</span>
         )}
       </div>
     </div>

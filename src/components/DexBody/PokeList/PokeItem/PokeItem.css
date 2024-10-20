@@ -56,10 +56,79 @@
   padding: 2px;
 }
 
-.grass {
+/* Colors for all Pokémon types */
+.type-normal {
+  background-color: rgb(200, 200, 200);
+}
+
+.type-fire {
+  background-color: rgb(255, 69, 0);
+}
+
+.type-water {
+  background-color: rgb(0, 105, 255);
+}
+
+.type-electric {
+  background-color: rgb(231, 231, 0);
+}
+
+.type-grass {
   background-color: rgb(49, 180, 49);
 }
 
-.poison {
-  background-color: purple;
+.type-ice {
+  background-color: rgb(173, 216, 230);
+}
+
+.type-fighting {
+  background-color: rgb(255, 0, 0);
+}
+
+.type-psychic {
+  background-color: rgb(255, 105, 180);
+}
+
+.type-bug {
+  background-color: rgb(135, 190, 34);
+}
+
+.type-poison {
+  background-color: rgb(128, 0, 128);
+}
+
+.type-rock {
+  background-color: rgb(139, 137, 137);
+}
+
+.type-ground {
+  background-color: rgb(222, 179, 107);
+}
+
+.type-flying {
+  background-color: rgb(135, 206, 250);
+}
+
+.type-ghost {
+  background-color: rgb(102, 51, 153);
+}
+
+.type-dragon {
+  background-color: rgb(0, 0, 255);
+}
+
+.type-dark {
+  background-color: rgb(50, 50, 50);
+}
+
+.type-steel {
+  background-color: rgb(192, 192, 192);
+}
+
+.type-fairy {
+  background-color: rgb(255, 182, 193);
+}
+
+.type-unknown {
+  background-color: rgb(128, 128, 128);
 }
