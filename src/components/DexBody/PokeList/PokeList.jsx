@@ -9,9 +9,9 @@ function PokeList() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Pagination State
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 16;
+  const totalPages = Math.ceil(pokemonList.length / itemsPerPage);
 
   useEffect(() => {
     const fetchPokemon = async () => {
@@ -54,10 +54,58 @@ function PokeList() {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = pokemonList.slice(indexOfFirstItem, indexOfLastItem);
 
-  const totalPages = Math.ceil(pokemonList.length / itemsPerPage);
-
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
+  };
+
+  const getPaginationButtons = () => {
+    const buttons = [];
+    const startPage = Math.max(1, currentPage - 2);
+    const endPage = Math.min(totalPages, currentPage + 2);
+
+    if (currentPage > 3) {
+      buttons.push(
+        <button
+          key={1}
+          className="pagination-button"
+          onClick={() => handlePageChange(1)}
+        >
+          1
+        </button>
+      );
+      if (currentPage > 4) {
+        buttons.push(<span key="left-ellipsis">...</span>);
+      }
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      buttons.push(
+        <button
+          key={i}
+          className={`pagination-button ${currentPage === i ? "active" : ""}`}
+          onClick={() => handlePageChange(i)}
+        >
+          {i}
+        </button>
+      );
+    }
+
+    if (currentPage < totalPages - 2) {
+      if (currentPage < totalPages - 3) {
+        buttons.push(<span key="right-ellipsis">...</span>);
+        buttons.push(
+          <button
+            key={totalPages}
+            className="pagination-button"
+            onClick={() => handlePageChange(totalPages)}
+          >
+            {totalPages}
+          </button>
+        );
+      }
+    }
+
+    return buttons;
   };
 
   if (loading) {
@@ -86,17 +134,41 @@ function PokeList() {
       </div>
 
       <div className="pagination-container">
-        {[...Array(totalPages).keys()].map((page) => (
-          <button
-            key={page + 1}
-            className={`pagination-button ${
-              currentPage === page + 1 ? "active" : ""
-            }`}
-            onClick={() => handlePageChange(page + 1)}
-          >
-            {page + 1}
-          </button>
-        ))}
+        <button
+          onClick={() =>
+            handlePageChange(currentPage > 5 ? currentPage - 5 : 1)
+          }
+          disabled={currentPage === 1}
+          className="pagination-button jump-5"
+        >
+          &lt;&lt;
+        </button>
+        <button
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="pagination-button previous"
+        >
+          Previous
+        </button>
+        {getPaginationButtons()}
+        <button
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          className="pagination-button next"
+        >
+          Next
+        </button>
+        <button
+          onClick={() =>
+            handlePageChange(
+              currentPage < totalPages - 4 ? currentPage + 5 : totalPages
+            )
+          }
+          disabled={currentPage === totalPages}
+          className="pagination-button jump-5"
+        >
+          &gt;&gt;
+        </button>
       </div>
     </div>
   );
