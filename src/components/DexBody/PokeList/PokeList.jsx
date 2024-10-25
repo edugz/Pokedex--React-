@@ -32,7 +32,8 @@ function PokeList() {
               name: detailedData.name,
               id: detailedData.id,
               types: detailedData.types.map((type) => type.type.name),
-              sprite: detailedData.sprites.front_default,
+              sprite:
+                detailedData.sprites.other["official-artwork"].front_default,
               shinySprite: detailedData.sprites.front_shiny,
             };
           })
