@@ -8,7 +8,10 @@ function PokeList() {
   const [pokemonList, setPokemonList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [visibleCount, setVisibleCount] = useState(16);
+
+  // Pagination State
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 16;
 
   useEffect(() => {
     const fetchPokemon = async () => {
@@ -46,8 +49,15 @@ function PokeList() {
     fetchPokemon();
   }, []);
 
-  const handleLoadMore = () => {
-    setVisibleCount((prevCount) => prevCount + 16);
+  // Calculate Pokemon for the current page
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = pokemonList.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(pokemonList.length / itemsPerPage);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
   };
 
   if (loading) {
@@ -61,24 +71,33 @@ function PokeList() {
   console.log(pokemonList);
 
   return (
-    <div className="list-main-container">
-      {pokemonList.slice(0, visibleCount).map((pokemon) => {
-        const pokemonProps = {
-          name: pokemon.name,
-          id: pokemon.id,
-          types: pokemon.types,
-          sprite: pokemon.sprite,
-          shinySprite: pokemon.shinySprite,
-        };
-        return <PokeItem {...pokemonProps} key={pokemon.name} />;
-      })}
-      {visibleCount < pokemonList.length && (
-        <div className="load-more-container">
-          <button className="load-more-button" onClick={handleLoadMore}>
-            Load More
+    <div className="poke-list-wrapper">
+      <div className="list-main-container">
+        {currentItems.map((pokemon) => (
+          <PokeItem
+            key={pokemon.id}
+            name={pokemon.name}
+            id={pokemon.id}
+            types={pokemon.types}
+            sprite={pokemon.sprite}
+            shinySprite={pokemon.shinySprite}
+          />
+        ))}
+      </div>
+
+      <div className="pagination-container">
+        {[...Array(totalPages).keys()].map((page) => (
+          <button
+            key={page + 1}
+            className={`pagination-button ${
+              currentPage === page + 1 ? "active" : ""
+            }`}
+            onClick={() => handlePageChange(page + 1)}
+          >
+            {page + 1}
           </button>
-        </div>
-      )}
+        ))}
+      </div>
     </div>
   );
 }
