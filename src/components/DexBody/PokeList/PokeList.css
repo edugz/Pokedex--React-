@@ -9,3 +9,36 @@
   padding: 20px;
   border-radius: 20px;
 }
+
+/* Sorting Section  */
+
+.sort-container {
+  background-color: grey;
+  height: 50px;
+  margin: 20px auto;
+  max-width: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  border-radius: 8px;
+  padding: 0 20px;
+}
+
+.sort-container .sort-label {
+  font-size: 1.4rem;
+  color: #ffffff;
+}
+
+.sort-container .sort-selection {
+  background-color: #f3f3f3;
+  color: #202020;
+  border-radius: 5px;
+  border: 2px solid #ddd;
+  padding: 4px 6px;
+  font-size: 1rem;
+}
+
+.sort-container select:focus {
+  border-color: #007bff;
+}
