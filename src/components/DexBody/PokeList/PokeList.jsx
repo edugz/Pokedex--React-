@@ -6,13 +6,17 @@ import PokeItem from "./PokeItem/PokeItem";
 import usePokemonData from "../../../hooks/usePokemonData.js";
 import usePagination from "../../../hooks/usePagination.js";
 import Pagination from "./Pagination/Pagination.jsx";
+import SearchBar from "./SearchBar/SearchBar.jsx";
+import useSearch from "../../../hooks/useSearch.jsx";
 
 function PokeList() {
   const { pokemonList, loading, error } = usePokemonData(493);
-  const itemsPerPage = 16;
+  const { searchQuery } = useSearch();
 
+  const itemsPerPage = 16;
   const [sortBy, setSortBy] = useState("Default");
 
+  /* Sorting Logic */
   const sortedPokemonList = [...pokemonList].sort((a, b) => {
     switch (sortBy) {
       case "A-Z":
@@ -28,8 +32,15 @@ function PokeList() {
     }
   });
 
+  /* Search Bar Filter Logic */
+  const lowercasedQuery = searchQuery.trim().toLowerCase();
+  const searchResults = sortedPokemonList.filter(({ name }) => {
+    const nameMatches = name.toLowerCase().startsWith(lowercasedQuery);
+    return nameMatches;
+  });
+
   const { currentItems, currentPage, totalPages, handlePageChange } =
-    usePagination(sortedPokemonList, itemsPerPage);
+    usePagination(searchResults, itemsPerPage);
 
   if (loading) {
     return <LoadingScreen />;
@@ -42,6 +53,7 @@ function PokeList() {
   return (
     <div className="poke-list-wrapper">
       <div className="sort-container">
+        <SearchBar />
         <label htmlFor="sort" className="sort-label">
           Sort by:
         </label>
