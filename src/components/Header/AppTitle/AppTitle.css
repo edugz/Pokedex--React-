@@ -1,0 +1,17 @@
+.title-image-container {
+  display: flex;
+  justify-content: center;
+}
+
+.title-image {
+  width: 400px;
+  height: auto;
+}
+
+.pokedex-sub-title {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 2rem;
+  color: rgb(116, 165, 255);
+  letter-spacing: 1px;
+}
