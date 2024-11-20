@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./PokeList.css";
 import ErrorScreen from "../../Common/ErrorScreen/ErrorScreen";
 import LoadingScreen from "../../Common/LoadingScreen/LoadingScreen";
@@ -41,6 +41,10 @@ function PokeList() {
 
   const { currentItems, currentPage, totalPages, handlePageChange } =
     usePagination(searchResults, itemsPerPage);
+
+  useEffect(() => {
+    handlePageChange(1);
+  }, [searchQuery]);
 
   if (loading) {
     return <LoadingScreen />;
